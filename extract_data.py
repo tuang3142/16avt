@@ -18,20 +18,14 @@ def get_hero_info(doc):
     def no_question_mark_td(tag):
         return tag.name == 'td' and not tag.text == '?'
 
-    def trim(text):
-        t = text.strip()
-        if t[-1] == ':':
-            return t[:len(t)-1]
-        return t
-
     info, pair = {}, []
     table_datas = doc.find(class_='info-table').find_all(no_question_mark_td)
     for td in table_datas:
-        text = trim(td.text)
+        text = td.text.strip('\n:')
         pair.append(text)
         if len(pair) == 2:
-            key, val = pair
-            info[pair[0]] = pair[1]
+            key, val = pair[0].lower(), pair[1]
+            info[key] = val
             pair = []
     return info
 
