@@ -2,10 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 
 
-URL = 'https://www.16personalities.com/profiles/5749bc31c9e3d'
-page = requests.get(URL)
-doc = BeautifulSoup(page.content, 'html.parser')
-
 def get_traits(doc):
     traits = []
     cards = doc.find(class_='cards').find_all("app-pct-card")
@@ -16,6 +12,7 @@ def get_traits(doc):
             'score': card.attrs[':score']
         })
     return traits
+
 
 def get_hero_info(doc):
     def no_question_mark_td(tag):
@@ -33,8 +30,12 @@ def get_hero_info(doc):
         text = trim(td.text)
         pair.append(text)
         if len(pair) == 2:
-            info.append({ pair[0]: pair[1] })
+            info.append({pair[0]: pair[1]})
             pair = []
     return info
 
-print(get_hero_info(doc))
+
+def extract_data(URL):
+    page = requests.get(URL)
+    doc = BeautifulSoup(page.content, 'html.parser')
+    return {**get_traits(doc), **get_hero_info(doc)}
