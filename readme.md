@@ -7,3 +7,4 @@
 - allow user to upload img
 - use face regconigtion
 - deploy heroku
+- create slack bot

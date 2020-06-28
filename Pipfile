@@ -6,9 +6,11 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-flask = ""
-requests = "*"
+flask = "*"
 bs4 = "*"
+flask-wtf = "*"
+python-dotenv = "*"
+requests = "*"
 
 [requires]
 python_version = "3.6"
